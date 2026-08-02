@@ -83,6 +83,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           <p className="mt-2 text-[11px] leading-relaxed text-muted">
             No server or backend. Your configuration and API keys stay in your own browser.
           </p>
+          <p className="mt-3 border-t border-line pt-2 text-[9px] font-extrabold uppercase tracking-[.14em] text-dim">© {new Date().getFullYear()} Copyright by Rajxzdev</p>
         </div>
       </div>
     </div>
