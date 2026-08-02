@@ -1,8 +1,8 @@
 # Ziva Agent AI
 
-**Router multi-agent 10 role — 100% lokal, tanpa server, tanpa backend.**
+**22-role multi-agent workspace — 100% local, no server, no backend.**
 
-Satu brief dikirim ke sepuluh agent spesialis yang berjalan bertahap. Setiap role bebas
+One brief is sent through 22 specialist agents that run in stages. Setiap role bebas
 memakai **provider dan model AI yang berbeda**, dengan **API key milikmu sendiri** yang
 tersimpan hanya di browser (`localStorage`). Tidak ada API route, tidak ada database,
 tidak ada data yang dikirim ke pihak ketiga selain provider yang kamu pilih sendiri.
@@ -28,42 +28,52 @@ Folder `out/` bisa dibuka langsung lewat web server statis apa pun
 
 ---
 
-## Tujuh halaman
+## Pages
 
 | Rute        | Isi                                                                    |
 |-------------|------------------------------------------------------------------------|
-| `/`         | Dashboard: status sistem, kesiapan key, orbit 10 role, aktivitas terakhir |
-| `/roles`    | Konfigurasi 10 role: provider, model, temperature, max token, system prompt |
+| `/`         | Dashboard: system status, key readiness, role overview, recent activity |
+| `/roles`    | Configure 22 roles: provider, model, fallback model, temperature, tokens, and system prompt |
 | `/workflow` | Editor kanvas: geser node, sambung/putus koneksi, rencana eksekusi      |
-| `/run`      | Runner: brief, konsol langsung, kanvas status, hasil per agent          |
+| `/run`      | Runner: brief, live console, stage status, per-agent results, and pipeline files          |
 | `/keys`     | Manajer API key per provider + tes koneksi                              |
 | `/history`  | Arsip 40 eksekusi terakhir beserta seluruh output                       |
 | `/settings` | Tema, aksen, animasi, ekspor/impor JSON, hapus data                     |
 
 ---
 
-## Sepuluh role
+## 22 specialist roles
 
-| Kode | Role | Tahap | Tugas |
-|------|------|-------|-------|
-| R-01 | Intake Router        | 0 Intake     | Memecah brief jadi objective, scope, constraint, metrik |
-| R-02 | Product Strategist   | 1 Strategi   | PRD ringkas, prioritas MoSCoW, user story |
-| R-03 | UI Architecture      | 2 Desain     | Sitemap, hierarki komponen, breakpoint, state matrix |
-| R-04 | Design System        | 2 Desain     | Token warna/tipografi/spacing/motion + CSS variable |
-| R-05 | UX Writer            | 2 Desain     | Microcopy, tone of voice, pesan error & empty state |
-| R-06 | Data & API Engineer  | 2 Desain     | Model data, kontrak penyimpanan, TypeScript interface |
-| R-07 | Frontend Engineer    | 3 Build      | Rencana implementasi + kode komponen kunci |
-| R-08 | QA & Test Engineer   | 4 Assurance  | Test plan, edge case, aksesibilitas, checklist regresi |
-| R-09 | Security Auditor     | 4 Assurance  | Audit kredensial, XSS, prompt injection, skor risiko |
-| R-10 | Release Orchestrator | 5 Ship       | Menggabungkan semua output jadi satu paket final |
+| Code | Role | Stage | Responsibility |
+|------|------|-------|----------------|
+| R-01 | Intake Router | Intake | Extracts objective, scope, constraints, and success metrics. |
+| R-12 | Research Analyst | Intake | Validates assumptions, audience needs, and research gaps. |
+| R-02 | Product Strategist | Strategy | Produces a practical PRD, priorities, and user stories. |
+| R-19 | Business Analyst | Strategy | Defines measurable requirements and acceptance criteria. |
+| R-11 | Prompt Engineer | Strategy | Writes task-specific prompts for this pipeline run. |
+| R-17 | Prompt Architect | Strategy | Designs reusable prompt systems, schemas, and guardrails. |
+| R-03 | UI Architecture | Design | Defines sitemap, components, breakpoints, and UI states. |
+| R-04 | Design System | Design | Defines tokens, typography, color, spacing, and motion. |
+| R-05 | UX Writer | Design | Creates product copy, labels, and empty/error states. |
+| R-06 | Data & API Engineer | Design | Designs data models, local storage, and API contracts. |
+| R-13 | Solution Architect | Design | Defines technical boundaries, integrations, and delivery blueprint. |
+| R-07 | Frontend Engineer | Build | Implements the frontend plan and key components. |
+| R-14 | Code Reviewer | Assurance | Reviews code quality, correctness, and maintainability. |
+| R-08 | QA & Test Engineer | Assurance | Builds test plans, edge cases, and regression checks. |
+| R-09 | Security Auditor | Assurance | Audits credentials, XSS, injection, and privacy risks. |
+| R-15 | Accessibility Specialist | Assurance | Audits WCAG, keyboard access, and semantic UI. |
+| R-18 | Prompt QA Specialist | Assurance | Tests prompts for ambiguity, injection, and regressions. |
+| R-20 | Performance Engineer | Assurance | Defines performance budgets and optimization work. |
+| R-16 | DevOps Engineer | Ship | Prepares CI/CD, monitoring, secrets, and rollback plans. |
+| R-21 | Technical Writer | Ship | Produces setup, API, handover, and troubleshooting docs. |
+| R-22 | Build & Finishing Engineer | Ship | Integrates generated files and delivers a final build-ready handoff. |
+| R-10 | Release Orchestrator | Ship | Consolidates all outputs into the final release package. |
 
-Alur bawaan: `R-01 → R-02 → (R-03, R-04, R-05, R-06) → R-07 → (R-08, R-09) → R-10`.
-Role dalam satu tahap dieksekusi paralel. Semua sambungan bisa diubah di `/workflow`
-(deteksi siklus otomatis).
+The workflow is editable in `/workflow`. Roles in the same execution layer can run in parallel; cycle detection prevents invalid connections.
 
 ---
 
-## Memilih AI per role
+## Choosing AI per role
 
 Setiap role memilih mesin AI-nya **sendiri-sendiri** — Frontend Engineer boleh pakai
 Gemini, QA pakai Groq, Release pakai Claude, dan seterusnya.
@@ -79,7 +89,7 @@ Katalog AI berjalan dua langkah:
 
 | Langkah | Isi |
 |---------|-----|
-| 1 · Penyedia AI | 11 penyedia, lengkap dengan penanda apakah API key-nya sudah terisi |
+| 1 · Penyedia AI | 18 supported providers, lengkap dengan penanda apakah API key-nya sudah terisi |
 | 2 · Model       | Daftar preset milik penyedia itu **atau ketik nama model sendiri** |
 
 Contoh hasil akhir yang valid:
